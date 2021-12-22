@@ -25,7 +25,7 @@ someinternalhost_IP = 10.128.0.5
 
 ## Проверка Monolith Reddit
 ```bash
-testapp_IP = 62.84.114.234
+testapp_IP = 51.250.10.176
 testapp_port = 9292
 ```
 ## Команда CLI с зупущенным приложением
