@@ -1,0 +1,21 @@
+#cloud-config
+
+users:
+  - default
+  - name: yc-user
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    ssh_authorized_keys:
+    - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDIfA7o3oVDNZYQCOB4BIIjIh+xeZUB7OKKv2mZ1l89ZD58S/jBX+LbGKd4/ogxkXP+C1n6xYgV+hmbPLFXj49zfo0cPHGxNWDNNKIDy5dIKeuuIxdsb9MqsJbt5Aah3C+DfVz9JQQE8O+chnai9wTQvYGWNpxZhE0hGnQ97Fh6jii6Mn+NifcPi4HbeP6KBxhu/4DkS/dCHPhWldSEXvAsAyYHY8NxUFRZ5ozWSlofaRsCeZuQw6OSEyZoz7IM1M2ucVt4s/A5aXlvV98Vyx2T43Jj1cpCVikLMP63ze0q48Xz4eg0gEpAx6U7BP2NeWbZz7xGBtV16QwFLRgGzXF7HP5pTYs6NvDRGVuAGsrCj4V2BKqsZfmarhGB8MvARQW/Vx6ZMiIQ7KlyP4+G454kkWRRAUrfdPiV1Dx0xu0P4/pw1ocnG1UebZbac0yuOg92uQjmveQLiK53AfK5zW5ad5nFUcvSWdjXbGRwM/CSnZHwps9k6ajDOXx5rEjPGE0= appuser"
+
+runcmd:
+  - wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
+  - echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/4.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.2.list
+  - sudo apt-get update -y
+  - sudo apt-get install -y mongodb-org git ruby-full ruby-bundler build-essential
+  - sudo systemctl start mongod
+  - sudo systemctl enable mongod
+  - cd /home/yc-user
+  - git clone -b monolith https://github.com/express42/reddit.git
+  - cd reddit
+  - bundle install
+  - puma -d
