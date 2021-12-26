@@ -1,0 +1,13 @@
+[Unit]
+Description=Reddit
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/reddit
+ExecStart=/usr/local/bin/puma -C /home/ubuntu/reddit/config/deploy/production.rb
+PermissionsStartOnly=true
+
+[Install]
+WantedBy=multi-user.target
