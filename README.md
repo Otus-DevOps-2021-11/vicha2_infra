@@ -104,4 +104,67 @@ yc compute instance create \
   --metadata-from-file user-data=./user.yaml 
 ```
 </details>
- 
+ <details><summary>ДЗ№8 Практика IaC с использованием Terraform</summary>
+
+## Установка Terraform на CentOS
+```bash
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+sudo apt-get update && sudo apt-get install terraform
+```
+## Создаем сервисный аккаунт
+```
+https://cloud.yandex.ru/docs/iam/quickstart-sa
+https://cloud.yandex.com/en-ru/docs/iam/operations/iam-token/create-for-sa#keys-create
+```
+## Запускаем создание ВМ через terraform
+```bash
+terraform apply -auto-approve
+```
+- Ошибка при выполнении: E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), is another process using it?
+  - Решение здесь - https://askubuntu.com/questions/1109982/e-could-not-get-lock-var-lib-dpkg-lock-frontend-open-11-resource-temporari
+  ```
+  sudo rm /var/lib/dpkg/lock*
+  ```
+## Задание с **
+- создаем балансировщик и таргет группу
+```
+resource "yandex_lb_network_load_balancer" "foo" {
+  name = "my-network-load-balancer"
+
+  listener {
+      name        = "my-listener"
+      port        = 80
+      target_port = 9292
+      external_address_spec {
+          ip_version = "ipv4"
+      }
+  }
+  attached_target_group {
+      target_group_id = "${yandex_lb_target_group.foo.id}"
+
+      healthcheck {
+          name = "http"
+          http_options {
+              port = 9292
+          }
+      }
+  }
+}
+
+resource "yandex_lb_target_group" "foo" {
+name      = "my-target-group"
+region_id = "ru-central1"
+
+target {
+  subnet_id = var.subnet_id
+  address   = "${yandex_compute_instance.app.network_interface.0.ip_address}"
+}
+}
+```
+- Добавляем вторую ноду с приложением и подключаем к балансировщику.
+  - Неудобно, т.к. много правок в разных файлах!
+- Добавлен параметр count (значение задаем через переменную)
+- Для реализации блока connection использовалась информация из источника https://www.terraform.io/language/resources/provisioners/connection#the-self-object
+- Для реализации блока target в yandex_lb_target_group использовался блок dynamic - https://www.terraform.io/language/expressions/dynamic-blocks#dynamic-blocks
+</details>
