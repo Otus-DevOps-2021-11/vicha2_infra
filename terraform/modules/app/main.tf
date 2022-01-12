@@ -24,5 +24,4 @@ resource "yandex_compute_instance" "app" {
   metadata = {
     ssh-keys = "ubuntu:${file(var.public_key_path)}"
   }
-
 }
