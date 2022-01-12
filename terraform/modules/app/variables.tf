@@ -9,6 +9,3 @@ variable app_disk_image {
 variable subnet_id {
   description = "Subnets for modules"
 }
-variable private_key {
-  description = "Path to private key"
-}
