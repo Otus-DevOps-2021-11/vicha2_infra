@@ -174,5 +174,9 @@ target {
 ## Задание с *
 - Создаем Yandex Object Storage для хранения state файла https://cloud.yandex.ru/docs/storage/operations/buckets/create
 - Бекенд описан в файле backend.tf
+- Инициализация бекенда через параметры командной строки
+```bash
+terraform init -backend-config="access_key=<your access key>" -backend-config="secret_key=<your secret key>"
+```
 
 </details>
