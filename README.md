@@ -168,3 +168,15 @@ target {
 - Для реализации блока connection использовалась информация из источника https://www.terraform.io/language/resources/provisioners/connection#the-self-object
 - Для реализации блока target в yandex_lb_target_group использовался блок dynamic - https://www.terraform.io/language/expressions/dynamic-blocks#dynamic-blocks
 </details>
+
+<details><summary>ДЗ№9 Принципы организации инфраструктурного кода и работа над инфраструктурой в команде на примере Terraform</summary>
+
+## Задание с *
+- Создаем Yandex Object Storage для хранения state файла https://cloud.yandex.ru/docs/storage/operations/buckets/create
+- Бекенд описан в файле backend.tf
+- Инициализация бекенда через параметры командной строки
+```bash
+terraform init -backend-config="access_key=<your access key>" -backend-config="secret_key=<your secret key>"
+```
+
+</details>
