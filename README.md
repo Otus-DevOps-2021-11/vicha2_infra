@@ -178,5 +178,30 @@ target {
 ```bash
 terraform init -backend-config="access_key=<your access key>" -backend-config="secret_key=<your secret key>"
 ```
+</details>
+<details><summary>ДЗ№10 Управление конфигурацией. Знакомство с Ansible</summary>
+
+### Ansible, установка и настройка клиента на рабочую машину
+- Установка PIP
+```
+yum install epel-release
+yum -y update
+yum -y install python-pip
+pip -V
+```
+- Установка Ansible
+```
+sudo yum install ansible -y
+ansible --version
+```
+- Проверка подключения SSH через ansible
+- Создание ansible.cfg
+- Группируем инвентори
+- Установка git
+```
+ansible app -b -m apt -a 'name=git state=present'
+```
+- Команда - ansible app -m command -a 'rm -rf ~/reddit' удаляет директорию ~/reddit
+Посторное выполнение playbook снова сделает git clone и статус будет changed=1
 
 </details>
