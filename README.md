@@ -205,3 +205,11 @@ ansible app -b -m apt -a 'name=git state=present'
 Посторное выполнение playbook снова сделает git clone и статус будет changed=1
 
 </details>
+<details><summary>ДЗ№11 11_Продолжение знакомства с Ansible: templates, handlers, dynamic, inventory, vault, tags</summary>
+
+## Что сделано
+- Выполнены задания - "Один playbook, один сценарий"
+- Выполнены задания - "Один плейбук, несколько сценариев"
+- Выполнены задания - "Несколько плейбуков"
+- Провижининг в Packer
+</details>
