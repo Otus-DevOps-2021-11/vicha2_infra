@@ -5,7 +5,7 @@ resource "yandex_compute_instance" "app" {
     tags = "reddit-app"
   }
   resources {
-    core_fraction = 20
+    core_fraction = 100
     cores         = 2
     memory        = 2
   }
