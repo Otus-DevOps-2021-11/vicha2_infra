@@ -2,5 +2,5 @@
     "folder_id": "b1g23edrfglkqcbjbd2osl",
     "subnet_id": "e9bsamfdkwlkhnr1spnj38",
     "source_image_id": "fd8ckm,djedl8qjsmv6mqa5",
-    "service_account_key_file": "key.json"
+    "service_account_key_file": "packer/key.json"
 }
