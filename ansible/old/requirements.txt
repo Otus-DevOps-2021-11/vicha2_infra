@@ -1,0 +1,3 @@
+ansible>=2.4
+yandex
+yandexcloud>=0.10.1
