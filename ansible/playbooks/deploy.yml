@@ -14,7 +14,7 @@
       bundler:
         state: present
         chdir: /home/ubuntu/reddit # <-- В какой директории выполнить команду bundle
-  
+
   handlers:
   - name: reload puma
     become: true
