@@ -213,3 +213,17 @@ ansible app -b -m apt -a 'name=git state=present'
 - Выполнены задания - "Несколько плейбуков"
 - Провижининг в Packer
 </details>
+
+<details><summary>ДЗ№13 Локальная разработка Ansible ролей с Vagrant. Тестирование конфигурации. </summary>
+
+- Установка Vagrant на Ubuntu
+```
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+sudo apt-get update && sudo apt-get install vagrant
+vagrant -v
+```
+- Создание ВМ через Vagrant
+- Задания по методичке
+
+</details>
