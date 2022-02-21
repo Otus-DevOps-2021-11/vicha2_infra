@@ -43,7 +43,7 @@ staging:
   stage: stage
   when: manual
   script:
-    - echo 'Deploy''
+    - echo 'Deploy'
   environment:
     name: beta
     url: http://beta.example.com
