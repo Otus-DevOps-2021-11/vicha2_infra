@@ -45,7 +45,7 @@ test_integration_job:
 deploy_dev_job:
   stage: review
   script:
-    - echo 'Deploy test'
+    - echo 'Deploy to check integration Slack'
   environment:
     name: dev
     url: http://dev.example.com
