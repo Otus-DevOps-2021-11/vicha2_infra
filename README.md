@@ -293,12 +293,14 @@ sudo docker-compose up -d
 username: root
 password: sudo docker exec -it <container ID> grep 'Password:' /etc/gitlab/initial_root_password
 ```
-
-
 - Удаление docker-machine
 ```
 docker-machine rm gitlab-ci-vm -y
 eval $(docker-machine env -u)
 yc compute instance delete gitlab-ci-vm
+```
+- Slack Integration
+```
+https://devops-team-otus.slack.com/archives/C02RF0B894G
 ```
 </details>
