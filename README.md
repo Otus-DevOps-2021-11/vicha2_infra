@@ -227,3 +227,78 @@ vagrant -v
 - Задания по методичке
 
 </details>
+
+<details><summary>ДЗ№20 Устройство Gitlab CI. Построение процесса непрерывной интеграции  </summary>
+
+- Создаем ВМ
+```
+yc compute instance create \
+--name gitlab-ci-vm \
+--memory=8 \
+--cores=2 \
+--zone ru-central1-a \
+--network-interface subnet-name=default-ru-central1-a,nat-ip-version=ipv4 \
+--create-boot-disk image-folder-id=standard-images,image-family=ubuntu-1804-lts,size=50 \
+--ssh-key ~/.ssh/id_rsa.pub
+```
+- RUN Docker-machine
+```
+docker-machine create \
+--driver generic \
+--generic-ip-address=130.193.50.106 \
+--generic-ssh-user yc-user \
+--generic-ssh-key ~/.ssh/id_rsa \
+gitlab-ci-vm
+
+docker-machine ls
+eval $(docker-machine env gitlab-ci-vm)
+```
+- Создаем папки и docker-compose.yml
+```
+ssh yc-user@130.193.50.106
+sudo mkdir -p /srv/gitlab/config /srv/gitlab/data /srv/gitlab/logs
+cd /srv/gitlab
+sudo touch docker-compose.yml
+sudo vi docker-compose.yml
+```
+- docker-compose.yml
+```
+web:
+  image: 'gitlab/gitlab-ce:latest'
+  restart: always
+  hostname: 'gitlab.example.com'
+  environment:
+    GITLAB_OMNIBUS_CONFIG: |
+      external_url 'http://<YOUR-VM-IP>'
+  ports:
+    - '80:80'
+    - '443:443'
+    - '2222:22'
+  volumes:
+    - '/srv/gitlab/config:/etc/gitlab'
+    - '/srv/gitlab/logs:/var/log/gitlab'
+    - '/srv/gitlab/data:/var/opt/gitlab'
+```
+- Install docker-compose
+```
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+```
+- Run container
+```
+sudo docker-compose up -d
+```
+- Login:
+```
+username: root
+password: sudo docker exec -it <container ID> grep 'Password:' /etc/gitlab/initial_root_password
+```
+
+
+- Удаление docker-machine
+```
+docker-machine rm gitlab-ci-vm -y
+eval $(docker-machine env -u)
+yc compute instance delete gitlab-ci-vm
+```
+</details>
